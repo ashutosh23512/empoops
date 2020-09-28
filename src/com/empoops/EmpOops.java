@@ -2,40 +2,56 @@ package com.empoops;
 import java.util.Random;
 
 public class EmpOops {
+
 	public static final int IS_FULL_TIME = 1;
 	public static final int IS_PART_TIME = 2;
-
-	public static int computeEmpWage(String company, int empRatePerHour, int numOfWorkingDays, int maxHoursPerMonth) {
-	int empHrs = 0, totalEmpHrs = 0, totalEmpWage = 0, totalWorkingDays = 0;
-
-	while (totalEmpHrs <= maxHoursPerMonth && totalWorkingDays < numOfWorkingDays) {
-	totalWorkingDays++;
-
-	Random r = new Random();
-	int empCheck = r.nextInt(3);
-
-	switch (empCheck) {
-	case IS_FULL_TIME:
-	 empHrs = 8;
-	 break;
-	case IS_PART_TIME:
-	 empHrs = 4;
-	 break;
-	default:
-	 empHrs = 0;
-
-	}
-	totalEmpHrs += empHrs;
-	System.out.println("Day : " + totalWorkingDays + "empHrs : " + empHrs);
-	}
-	totalEmpWage = totalEmpHrs * empRatePerHour;
-	System.out.println("Total Emp Wage for Company: " +company+" is: "+ totalEmpWage);
-	return totalEmpWage;
-	}
+   
+	public int numOfCompany = 0;
+	private CompanyEmpWage[] companyEmpWageArray;
 	
-	public static void main(String[] args) {
-     computeEmpWage("Reliance", 15, 25 , 100);
-     computeEmpWage("BigBazar", 20, 27 , 90);
+    public  EmpOops() {
+    	companyEmpWageArray = new CompanyEmpWage[5];
+    }
+    private void addCompanyEmpWage(String company, int empRatePerHour,int numOfWorkingDays, int maxHoursPerMonth ) {
+    	companyEmpWageArray[numOfCompany] = new CompanyEmpWage(company, empRatePerHour, numOfWorkingDays, maxHoursPerMonth);
+    numOfCompany++;
+    }
+    
+	private void computeEmpWage() {
+		for(int i =0; i < numOfCompany; i++) {
+			companyEmpWageArray[i].setTotalEmpWage(this.computeEmpWage(companyEmpWageArray[i]));
+		System.out.println(companyEmpWageArray[i]);
+		}
 	}
-	
-}
+	private int computeEmpWage(CompanyEmpWage companyEmpWage) {
+		int empHours = 0, totalEmpHours = 0, totalWorkingDays = 0;
+
+
+		while (totalEmpHours <= companyEmpWage.maxHoursPerMonth && totalWorkingDays < companyEmpWage.numOfWorkingDays) {
+			totalWorkingDays++;
+            int empCheck = (int)Math.floor(Math.random()* 10)% 3;
+
+			switch (empCheck) {
+			case IS_PART_TIME:
+				empHours = 4;
+				break;
+			case IS_FULL_TIME:
+				empHours = 8;
+				break;
+			default:
+				empHours = 0;
+			}
+
+
+			totalEmpHours += empHours;
+			System.out.println("Day: " + totalWorkingDays + " Emp Hr:  " + empHours);
+		}
+       return totalEmpHours * companyEmpWage.empRatePerHour;
+
+	}
+	 public static void main(String[] args) {
+		 EmpOops empWageBuilder = new EmpOops();
+		 empWageBuilder.addCompanyEmpWage("Reliance",  20,  2,  10);
+		 empWageBuilder.addCompanyEmpWage("BigBazar",  10,  4,  20);
+		 empWageBuilder.computeEmpWage();
+	 }}
