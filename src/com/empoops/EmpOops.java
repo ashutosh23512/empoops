@@ -26,10 +26,11 @@ public class EmpOops implements IComputeEmpWage{
     }
     @Override
 	public void computeEmpWage() {
-		CompanyEmpWage companyEmpWage = companyEmpWageList.get(0);
+    	for(int i = 0; i < companyEmpWageList.size(); i++){
+		CompanyEmpWage companyEmpWage = companyEmpWageList.get(i);
 		companyEmpWage.setTotalEmpWage(this.computeEmpWage(companyEmpWage));
 		System.out.println(companyEmpWage);
-
+      }
 	}
 	private int computeEmpWage(CompanyEmpWage companyEmpWage) {
 		int empHours = 0, totalEmpHours = 0, totalWorkingDays = 0;
@@ -64,9 +65,10 @@ public class EmpOops implements IComputeEmpWage{
 	}
 	 public static void main(String[] args) {
 		 EmpOops empWageBuilder = new EmpOops();
-		// empWageBuilder.addCompanyEmpWage("Reliance",  20,  5,  10);
+		 empWageBuilder.addCompanyEmpWage("Reliance",  20,  5,  10);
 		 empWageBuilder.addCompanyEmpWage("BigBazar",  10,  4,  20);
 		 empWageBuilder.computeEmpWage();
 	 }
 	
 }
+
