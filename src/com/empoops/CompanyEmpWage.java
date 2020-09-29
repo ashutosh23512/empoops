@@ -14,6 +14,7 @@ package com.empoops;
 		    	this.empRatePerHour = empRatePerHour;
 		    	this.numOfWorkingDays = numOfWorkingDays;
 		    	this.maxHoursPerMonth = maxHoursPerMonth;
+		        totalEmpWage=0;
 		    	
 		    }
 		    public void setTotalEmpWage(int totalEmpWage) {
